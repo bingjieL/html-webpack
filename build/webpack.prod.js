@@ -22,6 +22,34 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
+  optimization: {
+    // optimization: {
+    //   nodeEnv: 'production'
+    // },           // 可增加环境变量
+    runtimeChunk: true,   // 打包后的问价名字加runtime
+    splitChunks: {
+      chunks: "all",
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      // 提取公共文件
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          chunks: 'all',
+          name: true
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+          chunks: 'all',
+          name: true
+        }
+      }
+    }
+  },
   plugins: [
     ...utils.getHtmlPlugin(),
     new webpack.DefinePlugin({   // 增加自定义变量
@@ -53,7 +81,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
       sourceMap: config.prod.sourceMap,
       parallel: true
     }),
-    new CleanWebpackPlugin({path: path.resolve(__dirname, '..', 'dist')})
+    new CleanWebpackPlugin({path: path.resolve(__dirname, '..', 'dist')}),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ]
 })
 
