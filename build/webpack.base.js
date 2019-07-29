@@ -19,6 +19,11 @@ module.exports = {
     // : config.dev.assetsPublicPath
   },
   resolve: {
+    modules: [
+      _resolve('src'), 
+      _resolve('node_modules')
+    ],
+    extensions: ['.wasm', '.mjs', '.js', '.json'],
     alias: {
       '@' : _resolve('src')
     }
