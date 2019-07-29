@@ -101,8 +101,6 @@ exports.getStyleLoaders = function(_sourceMap, _postCss, _extract) {
       use: speKeyloaders
     })
   }
-
-  console.log('---> sytleLoaders', sytleLoaders)
   return sytleLoaders;
 }
 

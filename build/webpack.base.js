@@ -9,14 +9,17 @@ const isProd  = process.env.NODE_ENV === 'production'
 function _resolve(dir) {
   return path.resolve(__dirname, '..', dir)
 }
+console.log('--> node env ', process.env.NODE_ENV === 'production'
+? config.prod.assetsPublicPath
+: config.dev.assetsPublicPath)
 module.exports = {
   entry: utils.getEntry(),
   output: {
     path: _resolve('dist'),
     filename: '[name].js',
-    // publicPath: process.env.NODE_ENV === 'production'
-    // ? config.prod.assetsPublicPath
-    // : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production'
+    ? config.prod.assetsPublicPath
+    : config.dev.assetsPublicPath
   },
   resolve: {
     modules: [

@@ -24,7 +24,7 @@ module.exports = merge(webpackBaseConfig, {
   },
   devtool: config.dev.devtool,
   devServer: {
-    open: true,
+    // open: true,
     hot: true,    // 热更新
     host: HOST,
     port: PORT,

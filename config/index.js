@@ -21,7 +21,7 @@ module.exports = {
   },
   prod: {
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
     assetsSubDirectory: 'static',
     devtool: '#source-map',
     sourceMap: true
