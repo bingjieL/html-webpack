@@ -64,7 +64,16 @@ module.exports = {
       } ,
       {
         test:/\.html$/,
-        loader:'html-withimg-loader'
+        use: [{
+          loader:'html-withimg-loader',
+        },
+        {
+          loader: 'html-loader',
+          options: {
+            attrs: ['img:src', 'img:data-src', 'audio:src'], //html图片输出
+            minimize: true
+          }
+        }]
       }
     ]
   },
