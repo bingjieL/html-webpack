@@ -33,6 +33,7 @@ exports.getHtmlPlugin = function() {
       filename: (name + '.html') === rootHtml ? 'index.html': (name + '.html'),
       template: path.resolve(__dirname, _filePath) ,
       favicon: path.resolve(__dirname, '..', 'public/favicon.ico'),
+      chunks: [name], // js按需引入
       minify:isProduct
       ? {
           removeComments: true, // 移除HTML中的注释

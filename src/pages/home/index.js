@@ -1,5 +1,5 @@
-import '@/pages/home/index.css'
-// import './index.less'
+// import '@/pages/home/index.css'
+import './index.less'
 import { testAxios } from '@/server/test.js'
 window.onload = function() {
   console.log('--- test',)
