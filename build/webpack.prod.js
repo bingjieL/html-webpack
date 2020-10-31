@@ -10,6 +10,7 @@ const utils = require('./utils')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default
 
  const  prdConfig = merge(webpackBaseConfig, {
   mode: 'production',
@@ -23,29 +24,21 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   optimization: {
-    // optimization: {
-    //   nodeEnv: 'production'
-    // },           // 可增加环境变量
-    runtimeChunk: true,   // 打包后的问价名字加runtime
     splitChunks: {
-      chunks: "all",
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      // 提取公共文件
       cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
+        common: {
+          name: 'common',
           chunks: 'all',
-          name: true
-        },
-        default: {
+          minSize: 0,
           minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
+        },
+        vendor: {
+          priority: 1,
+          name: 'vendor',
+          test: /node_modules/,
           chunks: 'all',
-          name: true
+          minSize: 0,
+          minChunks: 2
         }
       }
     }
@@ -73,18 +66,21 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
         ? { safe: true, map: { inline: false } }
         : { safe: true }
     }),
-    //  压缩
+     // 压缩
     new UglifyJsPlugin({
       uglifyOptions: {
         warnings: false
       },
+      exclude:  /node_modules/,
       sourceMap: config.prod.sourceMap,
       parallel: true
     }),
     new CleanWebpackPlugin({path: path.resolve(__dirname, '..', 'dist')}),
-    new webpack.optimize.ModuleConcatenationPlugin(),
+    new WebpackDeepScopeAnalysisPlugin(),
+
+    // new webpack.optimize.ModuleConcatenationPlugin(),
   ]
 })
 
-console.log('---> prdConfig', prdConfig)
+// console.log('---> prdConfig', prdConfig)
 module.exports = prdConfig

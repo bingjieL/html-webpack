@@ -1,5 +1,6 @@
 import './index.less'
 // import { testAxios } from '@/server/test.js'
+import $ from 'jquery'
 console.log('>>>> ', $('.test1'))
 window.onload = function() {
   console.log('--- test',)

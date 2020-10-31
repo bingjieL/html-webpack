@@ -33,7 +33,8 @@ exports.getHtmlPlugin = function() {
       filename: (name + '.html') === rootHtml ? 'index.html': (name + '.html'),
       template: path.resolve(__dirname, _filePath) ,
       favicon: path.resolve(__dirname, '..', 'public/favicon.ico'),
-      chunks: [name], // js按需引入
+      chunks: [name, 'vendor', 'common'], // js按需引入
+      inject: true,
       minify:isProduct
       ? {
           removeComments: true, // 移除HTML中的注释
@@ -79,7 +80,8 @@ exports.cssLoaders = function(_sourceMap, _postCss, _extract) {
     if(_extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        fallback: 'style-loader'
+        fallback: 'style-loader',
+        publicPath: '../../'
       })
     }else {
       return ['style-loader'].concat(loaders)

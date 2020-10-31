@@ -2,6 +2,7 @@
 const utils = require('./utils')
 const path = require('path')
 const config = require('../config')
+const webpack = require('webpack')
 
 const isProd  = process.env.NODE_ENV === 'production'
 
@@ -22,10 +23,10 @@ module.exports = {
     : config.dev.assetsPublicPath
   },
   resolve: {
-    modules: [
-      _resolve('src'), 
-      _resolve('node_modules')
-    ],
+    // modules: [
+    //   _resolve('src'), 
+    //   _resolve('node_modules')
+    // ],
     extensions: ['.wasm', '.mjs', '.js', '.json'],
     alias: {
       '@' : _resolve('src')
@@ -77,12 +78,12 @@ module.exports = {
       }
     ]
   },
-  // plugins:[
-  //   new webpack.ProvidePlugin({
-  //     $: "jquery",
-  //     jQuery: "jquery"
-  //   }),
-  // ],
+  plugins:[
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
+  ],
   node: {
       fs: 'empty'
   },
